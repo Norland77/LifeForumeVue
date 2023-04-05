@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <h1 class="title">Life Forum</h1>
-    <VLoginButton :model="user"></VLoginButton>
+    <VLoginButton ></VLoginButton>
   </div>
   <div class="body_subTitle">
     <button class="subTitleBtn">Правила</button>
@@ -12,11 +12,6 @@
 <script setup lang="ts">
 import {defineComponent, ref} from "vue";
 import VLoginButton from "./VLoginButton.vue";
-
-const user = ref({
-  name: "Nikita"
-})
-
 </script>
 
 <style scoped>

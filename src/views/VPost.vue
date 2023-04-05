@@ -25,18 +25,7 @@ let data = JSON.parse(dataStr)
 let messages = ref(data)
 const route = useRoute()
 let message = ref(data)
-interface ModelProps {
-  id: number,
-  title: string,
-  messages: object[],
-  tags: string[]
-}
-interface TypeProps {
-  model: ModelProps
-}
-const props = withDefaults(defineProps<TypeProps>(), {
-  model: Object
-})
+
 
 for(let item in messages.value) {
   if (messages.value[item].id == route.params.id) {
