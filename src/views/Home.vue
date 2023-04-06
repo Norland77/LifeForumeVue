@@ -4,12 +4,11 @@
     <ThemeList></ThemeList>
     <div class="home_rightSide">
       <VTagsBlock></VTagsBlock>
-      <button class="createThemeBtn">Створити тему</button>
+      <router-link :to="{name: 'createTheme'}"  class="createThemeBtn">Створити тему</router-link>
       <VForumStats></VForumStats>
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 
 import VHeader from "../components/Header/VHeader.vue";
@@ -41,5 +40,6 @@ import VForumStats from "../components/ForumStats/VForumStats.vue";
   font-size: 18px;
   line-height: 22px;
   color: #176093;
+  text-align: center;
 }
 </style>

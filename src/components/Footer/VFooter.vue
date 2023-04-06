@@ -18,7 +18,7 @@
   padding: 5px 120px;
   gap: 25px;
   background: #2B485C;
-  border-radius: 0 0 5px 5px;
+  border-radius: 5px 5px 0 0;
 }
 .subTitleBtn {
   font-family: 'Liberation Sans',sans-serif;
