@@ -2,6 +2,8 @@ import Home from "../views/Home.vue";
 import {createRouter, createWebHistory} from "vue-router";
 import VPost from "../views/VPost.vue";
 import VCreatePost from "../views/VCreatePost.vue";
+import VUserInfo from "../views/VUserInfo.vue"
+import {VueElement} from "vue";
 
 
 const routes =[
@@ -19,6 +21,11 @@ const routes =[
         path:'/createTheme',
         component: VCreatePost,
         name: "createTheme",
+    },
+    {
+        path:'/userInfo',
+        component: VUserInfo,
+        name: "userInfo",
     }
 ]
 

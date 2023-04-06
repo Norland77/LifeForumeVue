@@ -2,10 +2,10 @@
 <div class="body_loginBtn">
   <button @click="loginOpen" class="loginBtn" v-if="!store.isLogin">Увійти або зареєструватися</button>
   <div class="loginBody" v-else>
-    <p class="user">{{activeUser.name}}</p>
-    <button @click="loginClose" class="exit">
+    <router-link :to="{name: 'userInfo'}" class="user">{{activeUser.name}}</router-link>
+    <router-link :to="{name: 'home'}" @click="loginClose" class="exit">
       <img src="../../assets/img/exit.svg" alt="exit">
-    </button>
+    </router-link>
   </div>
   <div v-if="isActive.active" class="login" @click="closeClickHandler()">
     <div class="login-content" @click.stop="disableErrors()">
