@@ -1,15 +1,14 @@
 <template>
 <div class="tag_body" v-for="item of filteredData">
-  <input class="tag_check" type="checkbox" v-bind:id="item.id" v-bind:value="item.tag" v-model="checkedTags">
+  <input class="tag_check" type="checkbox" v-bind:id="item.id" v-bind:value="item.tag" v-model="$store.state.checkedTags">
   <label class="tag_label" v-bind:for="item.id">{{item.tag}}</label>
 </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { computed } from "vue";
 
 
-const checkedTags = ref([])
 interface TypeData {
   id: number,
   tag: string
