@@ -15,12 +15,10 @@ import json from "../../json/tags.json";
 
 let tagsCount = ref(13)
 const searchQuery = ref('')
-let tagID = ref(1)
 let buttonName = ref('Більше')
 let dataStr = JSON.stringify(json)
 let data = JSON.parse(dataStr)
 const tagsData = data
-console.log(tagsData.length);
 function showMore () {
   if (tagsCount.value === tagsData.length) {
     tagsCount.value = 13

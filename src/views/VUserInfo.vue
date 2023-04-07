@@ -1,7 +1,7 @@
 <template>
   <div class="userInfo_body">
     <div class="userInfo">
-      <h3 class="userInfo_title">Доброго дня,<span class="userInfo_titleUser">User2323</span>!</h3>
+      <h3 class="userInfo_title">Доброго дня,<span class="userInfo_titleUser">{{$store.state.loginStore.activeUser.name}}</span>!</h3>
       <p class="userInfo_subtitle">Для зміни логіна заповни нижче поле</p>
       <div class="userInfo_update">
         <input class="userInfo_input" type="text">

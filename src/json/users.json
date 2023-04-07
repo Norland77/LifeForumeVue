@@ -6,15 +6,21 @@
     "password": "090902020909"
   },
   {
-    "id": 3,
+    "id": 2,
     "name": "Norland",
     "login": "nikita.foka2016@gmail.com",
     "password": "090902020909"
   },
   {
-    "id": 1,
+    "id": 3,
     "name": "Nik",
     "login": "nikita.foka2017@gmail.com",
+    "password": "090902020909"
+  },
+  {
+    "id": 4,
+    "name": "Nikitus",
+    "login": "nikita.foka2018@gmail.com",
     "password": "090902020909"
   }
 ]

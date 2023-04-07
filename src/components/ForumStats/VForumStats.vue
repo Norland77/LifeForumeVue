@@ -4,32 +4,21 @@
   <div class="stats_main">
     <div class="stats_block">
       <p class="stats_text">Теми</p>
-      <p class="stats_text">{{message.length}}</p>
+      <p class="stats_text">{{$store.getters.getThemesCount}}</p>
     </div>
     <div class="stats_block">
       <p class="stats_text">Повідомлення</p>
-      <p class="stats_text">{{messageCount}}</p>
+      <p class="stats_text">{{$store.getters.getMessageCount}}</p>
     </div>
     <div class="stats_block">
       <p class="stats_text">Користувачі</p>
-      <p class="stats_text">1</p>
+      <p class="stats_text">{{$store.getters.getUsersCount}}</p>
     </div>
   </div>
 </div>
 </template>
 
 <script setup lang="ts">
-  import json from "../../json/message.json";
-  import {ref} from "vue";
-  let messageCount = ref(0);
-  let dataStr = JSON.stringify(json)
-  let data = JSON.parse(dataStr)
-  const message = ref(data)
-
-  message.value.map((item: any) => {
-    console.log(item.messages.length)
-    messageCount.value += item.messages.length
-  })
 </script>
 
 <style scoped>
@@ -37,6 +26,7 @@
   border: 1px solid #A5CAE4;
   border-radius: 5px;
   padding: 10px;
+  margin-bottom: 25px;
 }
 .stats_title {
   font-family: 'Inter',sans-serif;

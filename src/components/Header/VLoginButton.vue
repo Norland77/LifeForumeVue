@@ -1,51 +1,51 @@
 <template>
 <div class="body_loginBtn">
-  <button @click="loginOpen" class="loginBtn" v-if="!store.isLogin">Увійти або зареєструватися</button>
+  <button @click="$store.commit('loginOpen')" class="loginBtn" v-if="!$store.state.loginStore.isLogin">Увійти або зареєструватися</button>
   <div class="loginBody" v-else>
-    <router-link :to="{name: 'userInfo'}" class="user">{{activeUser.name}}</router-link>
-    <router-link :to="{name: 'home'}" @click="loginClose" class="exit">
+    <router-link :to="{name: 'userInfo'}" class="user">{{$store.state.loginStore.activeUser.name}}</router-link>
+    <router-link :to="{name: 'home'}" @click="$store.commit('loginClose')" class="exit">
       <img src="../../assets/img/exit.svg" alt="exit">
     </router-link>
   </div>
-  <div v-if="isActive.active" class="login" @click="closeClickHandler()">
-    <div class="login-content" @click.stop="disableErrors()">
-      <h2 class="title-medium login-content-title">{{store.haveAccount ? "Увійти" : "Зареєструватися"}}</h2>
+  <div v-if="$store.state.loginStore.isActive" class="login" @click="$store.commit('closeClickHandler')">
+    <div class="login-content" @click.stop="$store.commit('disableErrors')">
+      <h2 class="title-medium login-content-title">{{$store.state.loginStore.haveAccount ? "Увійти" : "Зареєструватися"}}</h2>
       <input
           type="text"
-          v-model="store.inputLogin"
+          v-model="$store.state.loginStore.inputLogin"
           class="subtitle-small"
           placeholder="Логін"
-          :style="{border: store.errorLogin ? '1px solid red' : ''}"
+          :style="{border: $store.state.loginStore.errorLogin ? '1px solid red' : ''}"
       >
       <input
           type="email"
-          v-model="store.inputEmail"
+          v-model="$store.state.loginStore.inputEmail"
           class="subtitle-small"
           placeholder="Пошта"
-          v-if="!store.haveAccount"
-          :style="{border: store.errorEmail ? '1px solid red' : ''}"
+          v-if="!$store.state.loginStore.haveAccount"
+          :style="{border: $store.state.loginStore.errorEmail ? '1px solid red' : ''}"
       >
       <input
           type="password"
-          v-model="store.inputPassword"
+          v-model="$store.state.loginStore.inputPassword"
           class="subtitle-small"
           placeholder="Пароль"
-          :style="{border: store.errorPassword ? '1px solid red' : ''}"
+          :style="{border: $store.state.loginStore.errorPassword ? '1px solid red' : ''}"
       >
       <input
           type="password"
-          v-model="store.inputPasswordRepeat"
+          v-model="$store.state.loginStore.inputPasswordRepeat"
           class="subtitle-small"
           placeholder="Підтвердіть пароль"
-          v-if="!store.haveAccount"
-          :style="{border: store.errorPassword ? '1px solid red' : ''}"
+          v-if="!$store.state.loginStore.haveAccount"
+          :style="{border: $store.state.loginStore.errorPassword ? '1px solid red' : ''}"
       >
-      <span @click="store.haveAccount = !store.haveAccount" class="login-content-change text-medium">{{store.haveAccount ? "Зареєструватися": "Увійти"}}</span>
+      <span @click="$store.state.loginStore.haveAccount = !$store.state.loginStore.haveAccount" class="login-content-change text-medium">{{$store.state.loginStore.haveAccount ? "Зареєструватися": "Увійти"}}</span>
       <button
           class="headline-medium login-content-submit"
-          @click.stop="login()"
+          @click.stop="$store.commit('login')"
       >
-        {{store.haveAccount ? "Увійти" : "Зареєструватися"}}
+        {{$store.state.loginStore.haveAccount ? "Увійти" : "Зареєструватися"}}
       </button>
     </div>
   </div>
@@ -54,57 +54,7 @@
 
 <script setup lang="ts">
 
-import {reactive, ref} from "vue";
-const isActive = reactive({active: false});
-const store = reactive({
-  isLogin: false,
-  haveAccount: false,
-  inputLogin: '',
-  inputEmail: '',
-  inputPassword: '',
-  inputPasswordRepeat: '',
-  errorPassword: false,
-  errorLogin: false,
-  errorEmail: false
-})
-function closeClickHandler():void{
-  isActive.active = false
-}
-function disableErrors(){
-  store.errorPassword = store.errorLogin = store.errorEmail = false
-}
 
-console.log(isActive.active)
-function loginOpen(): void {
-  isActive.active = true
-}
-function loginClose(): void {
-  store.isLogin = false
-  console.log(store.isLogin)
-}
-let activeUser = {
-  name: ""
-}
-import json from "../../json/users.json";
-
-let dataStr = JSON.stringify(json)
-let data = JSON.parse(dataStr)
-let usersData = ref(data)
-function login(): void {
-  console.log(store.inputLogin);
-  console.log(store.inputPassword)
-  for (let item in usersData.value) {
-    console.log(usersData.value[item])
-    if (usersData.value[item].login === store.inputLogin && usersData.value[item].password === store.inputPassword) {
-      isActive.active = false;
-      activeUser = {
-        name: usersData.value[item].name
-      }
-      store.isLogin = true;
-      console.log(activeUser)
-    }
-  }
-}
 
 </script>
 

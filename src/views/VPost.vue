@@ -8,10 +8,15 @@
     <p class="post_user"> {{ item.user }}</p>
     <p class="post_message">{{item.message}}</p>
   </div>
-  <form>
+  <form v-if="$store.state.loginStore.isLogin">
     <textarea class="post_textArea"></textarea>
     <button class="post_button">Відправити</button>
   </form>
+  <div v-else class="post_noLoginText_body">
+    <p class="post_noLoginText">
+      Для відповіді на  цю тему будь ласка увійдіть або створіть новий акаунт
+    </p>
+  </div>
 </div>
 </template>
 
@@ -29,7 +34,6 @@ let message = ref(data)
 
 for(let item in messages.value) {
   if (messages.value[item].id == route.params.id) {
-    console.log(messages.value[item])
     message = {
       title: messages.value[item].title,
       tags: messages.value[item].tags,
@@ -71,6 +75,7 @@ for(let item in messages.value) {
   color: #141414;
 }
 .post_items {
+  border-bottom: 1px solid #A5CAE4;
   display: flex;
   gap: 30px;
   padding: 60px 0;
@@ -120,5 +125,16 @@ for(let item in messages.value) {
   color: #141414;
   border: none;
   padding: 15px;
+}
+.post_noLoginText {
+  font-family: 'Inter',sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #969696;
+}
+.post_noLoginText_body {
+  margin: 40px 0;
 }
 </style>

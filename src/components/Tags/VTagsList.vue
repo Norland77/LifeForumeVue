@@ -1,6 +1,6 @@
 <template>
 <div class="tag_body" v-for="item of filteredData">
-  <input class="tag_check" type="checkbox" v-bind:id="item.id" v-bind:value="item.tag" v-model="$store.state.checkedTags">
+  <input class="tag_check" type="checkbox" v-bind:id="item.id" v-bind:value="item.tag" v-model="$store.state.tagsStore.checkedTags">
   <label class="tag_label" v-bind:for="item.id">{{item.tag}}</label>
 </div>
 </template>
