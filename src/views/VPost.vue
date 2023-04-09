@@ -125,8 +125,8 @@ for(let item in messages.value) {
   &_messages {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 92%;
-    gap: 30px;
   }
   &_message {
     font-family: 'Inter',sans-serif;
