@@ -77,6 +77,7 @@ for(let item in messages.value) {
     justify-content: space-between;
   }
   &_title{
+    width: 85%;
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 700;
