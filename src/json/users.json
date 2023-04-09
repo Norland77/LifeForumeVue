@@ -3,24 +3,32 @@
     "id": 1,
     "name": "Nikita",
     "login": "nikitafoka30@gmail.com",
-    "password": "090902020909"
+    "password": "090902020909",
+    "role": "Admin",
+    "isBanned": false
   },
   {
     "id": 2,
     "name": "Norland",
     "login": "nikita.foka2016@gmail.com",
-    "password": "090902020909"
+    "password": "090902020909",
+    "role": "User",
+    "isBanned": true
   },
   {
     "id": 3,
     "name": "Nik",
     "login": "nikita.foka2017@gmail.com",
-    "password": "090902020909"
+    "password": "090902020909",
+    "role": "User",
+    "isBanned": false
   },
   {
     "id": 4,
     "name": "Nikitus",
     "login": "nikita.foka2018@gmail.com",
-    "password": "090902020909"
+    "password": "090902020909",
+    "role": "User",
+    "isBanned": false
   }
 ]

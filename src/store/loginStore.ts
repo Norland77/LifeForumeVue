@@ -14,6 +14,8 @@ export default {
         errorEmail: false,
         isActive: false,
         activeUser: {name: ""},
+        isAdmin: "User",
+        isBanned: false
     },
     getters: {
 
@@ -30,6 +32,7 @@ export default {
         },
         loginClose(state: any): void {
             state.isLogin = false
+            state.isAdmin = "User"
         },
         login(state: any): void {
             let dataStr = JSON.stringify(json)
@@ -37,11 +40,17 @@ export default {
             let usersData = ref(data)
             for (let item in usersData.value) {
                 if (usersData.value[item].login === state.inputLogin && usersData.value[item].password === state.inputPassword) {
-                    state.isActive = false;
                     state.activeUser = {
                         name: usersData.value[item].name
                     }
+                    if (usersData.value[item].role === "Admin") {
+                        state.isAdmin = "Admin"
+                    } else {
+                        state.isAdmin = "User"
+                    }
+                    state.isBanned = usersData.value[item].isBanned === true;
                     state.isLogin = true;
+                    state.isActive = false;
                 }
             }
         }

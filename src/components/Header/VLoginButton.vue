@@ -2,7 +2,7 @@
 <div class="body_loginBtn">
   <button @click="$store.commit('loginOpen')" class="loginBtn" v-if="!$store.state.loginStore.isLogin">Увійти або зареєструватися</button>
   <div class="loginBody" v-else>
-    <router-link :to="{name: 'userInfo'}" class="user">{{$store.state.loginStore.activeUser.name}}</router-link>
+    <router-link :style="{ color: $store.state.loginStore.isAdmin === 'Admin' ? 'red' : 'white' }" :to="{name: 'userInfo'}" class="user">{{$store.state.loginStore.activeUser.name}}</router-link>
     <router-link :to="{name: 'home'}" @click="$store.commit('loginClose')" class="exit">
       <img src="../../assets/img/exit.svg" alt="exit">
     </router-link>

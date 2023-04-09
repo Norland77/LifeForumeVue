@@ -3,7 +3,11 @@
   <div class="theme_leftSide">
     <img class="theme_img" src="../../assets/img/MessageIcon.svg" alt="Message">
     <div class="theme_leftSideMain">
-      <router-link class="theme_title" :to="{ name: 'post', params: {id: model.id} }">{{ model.title }}</router-link>
+      <router-link  :to="{ name: 'post', params: {id: model.id} }">
+        <p class="theme_title">
+          {{ model.title }}
+        </p>
+      </router-link>
       <div class="theme_about">
         <p class="theme_count">Повідомлення: {{model.messages.length}}</p>
         <div class="theme_tags" v-for="item of model.tags">
@@ -14,12 +18,13 @@
   </div>
   <div class="theme_rightSide">
     <p class="theme_lastTxt">Останнє:</p>
-    <p class="theme_last"><span class="theme_lastUser">{{model.messages.at(-1).user}}</span><span class="theme_lastData">{{model.messages.at(-1).data}}</span></p>
+    <p class="theme_last"><span class="theme_lastUser">{{model.messages.at(-1).user}}</span><span class="theme_lastData">{{setData.setData(model.messages.at(-1).data)}}</span></p>
   </div>
 </div>
 </template>
 
 <script setup lang="ts">
+import setData from '../../helpers/index'
 interface ModelProps {
   id: number
   title: string,
@@ -42,7 +47,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
   justify-content: space-between;
 }
 .theme_leftSide {
-  width: 100%;
+  width: 85%;
   display: flex;
   gap: 12px;
   border-bottom: 2px solid #A5CAE4;
@@ -52,6 +57,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
   width: 30px;
 }
 .theme_leftSideMain {
+  width: 85%;
   display: flex;
   flex-direction: column;
 }
@@ -62,6 +68,9 @@ const props = withDefaults(defineProps<TypeProps>(), {
   font-size: 16px;
   line-height: 19px;
   color: #176093;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* не переносить текст на новую строку */
 }
 .theme_about {
   display: flex;
@@ -76,6 +85,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
 .theme_rightSide {
   display: flex;
   flex-direction: column;
+  min-width: 15%;
   gap: 5px;
   padding: 5px 10px;
   border-width: 2px 2px 2px 2px;
@@ -84,6 +94,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
   border-radius: 5px;
 }
 .theme_lastTxt {
+  width: 100%;
   font-family: 'Liberation Sans',sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -92,18 +103,25 @@ const props = withDefaults(defineProps<TypeProps>(), {
   color: #000000;
 }
 .theme_last {
+  width: 100%;
   display: flex;
   gap: 5px;
+
 }
 .theme_lastUser {
+  width: 50%;
   font-family: 'Liberation Sans',sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;
   line-height: 22px;
   color: #176093;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* не переносить текст на новую строку */
 }
 .theme_lastData {
+  width: 100%;
   font-family: 'Liberation Sans',sans-serif;
   font-style: normal;
   font-weight: 400;

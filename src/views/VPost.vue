@@ -1,22 +1,40 @@
 <template>
 <div class="post_body">
-  <h3 class="post_title">{{message.title}}</h3>
+  <div class="post_header">
+    <h3 class="post_title">{{message.title}}</h3>
+    <button v-if="$store.state.loginStore.isAdmin === 'Admin'" class="admin_btn">Видалити тему</button>
+  </div>
   <div class="post_tags">
     <p  v-for="item of message.tags" class="post_tag">{{item}}</p>
   </div>
   <div class="post_items" v-for="item of message.messages">
-    <p class="post_user"> {{ item.user }}</p>
-    <p class="post_message">{{item.message}}</p>
+    <div class="post_user">
+      <p class="post_user_name"> {{ item.user }}</p>
+      <p class="post_user_role">{{$store.state.loginStore.isAdmin}}</p>
+      <div v-if="$store.state.loginStore.isAdmin === 'Admin'">
+        <button v-if="$store.state.loginStore.isBanned" class="admin_btn_ban">Розбанити</button>
+        <button v-else class="admin_btn_ban">Забанити</button>
+      </div>
+    </div>
+    <div class="post_messageBlock">
+      <p class="post_message">{{item.message}}</p>
+      <p class="post_messageData">{{setData.setData(item.data)}}</p>
+    </div>
   </div>
-  <form v-if="$store.state.loginStore.isLogin">
-    <textarea class="post_textArea"></textarea>
-    <button class="post_button">Відправити</button>
-  </form>
-  <div v-else class="post_noLoginText_body">
+  <div v-if="!$store.state.loginStore.isLogin" class="post_noLoginText_body">
     <p class="post_noLoginText">
       Для відповіді на  цю тему будь ласка увійдіть або створіть новий акаунт
     </p>
   </div>
+  <div v-else-if="$store.state.loginStore.isBanned" class="post_noLoginText_body">
+    <p class="post_noLoginText">
+      Нажаль вас заблоковано адміністрацією, тому ви не можете писати коментарі, дочекайтесь поки вас розблокують
+    </p>
+  </div>
+  <form v-else>
+    <textarea class="post_textArea"></textarea>
+    <button class="post_button">Відправити</button>
+  </form>
 </div>
 </template>
 
@@ -24,6 +42,7 @@
 import { useRoute } from 'vue-router';
 import {onMounted, ref} from "vue";
 import json from "../json/message.json";
+import setData from "../helpers/index"
 
 let dataStr = JSON.stringify(json)
 let data = JSON.parse(dataStr)
@@ -53,6 +72,10 @@ for(let item in messages.value) {
   margin: 30px 120px;
   padding: 15px 40px;
 }
+.post_header {
+  display: flex;
+  gap: 25px;
+}
 .post_title {
   font-family: 'Inter',sans-serif;
   font-style: normal;
@@ -60,6 +83,30 @@ for(let item in messages.value) {
   font-size: 34px;
   line-height: 42px;
   color: #176093;
+}
+.admin_btn {
+  height: 40px;
+  width: 15%;
+  background: #176093;
+  border-radius: 5px;
+  font-family: 'Inter',sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #141414;
+}
+.admin_btn_ban {
+  height: 40px;
+  width: 100%;
+  background: #176093;
+  border-radius: 5px;
+  font-family: 'Inter',sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #141414;
 }
 .post_tags {
   display: flex;
@@ -74,6 +121,20 @@ for(let item in messages.value) {
   line-height: 17px;
   color: #141414;
 }
+.post_messageBlock {
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  gap: 30px;
+}
+.post_messageData {
+  font-family: 'Inter',sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #969696;
+}
 .post_items {
   border-bottom: 1px solid #A5CAE4;
   display: flex;
@@ -81,16 +142,23 @@ for(let item in messages.value) {
   padding: 60px 0;
 }
 .post_user {
-  width: 5%;
+  width: 8%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.post_user_name {
   font-family: 'Inter',sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
   color: #176093;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* не переносить текст на новую строку */
 }
 .post_message {
-  width: 80%;
   font-family: 'Inter',sans-serif;
   font-style: normal;
   font-weight: 600;

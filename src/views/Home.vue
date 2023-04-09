@@ -4,7 +4,13 @@
     <ThemeList></ThemeList>
     <div class="home_rightSide">
       <VTagsBlock></VTagsBlock>
-      <router-link :to="{name: 'createTheme'}"  class="createThemeBtn">Створити тему</router-link>
+      <div v-if="!$store.state.loginStore.isLogin" class="createThemeBtn">
+        <p>Щоб створити тему будь ласка зареєструйтесь</p>
+      </div>
+      <div v-else-if="$store.state.loginStore.isBanned" class="createThemeBtn">
+        <p>Нажаль ви заблоковані адміністрацією, дочекайтесь поки вас розблокують</p>
+      </div>
+      <router-link v-else :to="{name: 'createTheme'}"  class="createThemeBtn">Створити тему</router-link>
       <VForumStats></VForumStats>
     </div>
   </div>
