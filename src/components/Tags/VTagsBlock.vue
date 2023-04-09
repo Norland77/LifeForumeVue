@@ -1,10 +1,10 @@
 <template>
-  <div class="tagsBlock_body">
-    <form  id="search">
-      <input class="searchTags" placeholder="Пошук тегів" name="query" v-model="searchQuery">
+  <div class="tags">
+    <form  id="tags_search">
+      <input class="tags_input" placeholder="Пошук тегів" name="query" v-model="searchQuery">
     </form>
     <VTagsList :tagsCount="tagsCount" :data="tagsData" :filter-key="searchQuery">></VTagsList>
-    <button @click="showMore" class="showMore">{{buttonName}}</button>
+    <button @click="showMore" class="tags_show">{{buttonName}}</button>
   </div>
 </template>
 
@@ -30,8 +30,8 @@ function showMore () {
 }
 </script>
 
-<style scoped>
-.tagsBlock_body {
+<style scoped lang="scss">
+.tags {
   width: 100%;
   max-height: 550px;
   display: flex;
@@ -47,24 +47,24 @@ function showMore () {
   overflow-scrolling: auto;
   overflow: auto;
   overflow-x: hidden;
-}
-.searchTags {
-  border: 1px solid #A5CAE4;
-  border-radius: 5px;
-  padding: 8px 35px;
-}
-.showMore {
-  border: 1px solid #A5CAE4;
-  border-radius: 5px;
-  background: none;
-  width: 100%;
-  padding: 5px;
-  font-family: 'Inter',sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #176093;
-  margin-top: 10px;
+  &_input {
+    border: 1px solid #A5CAE4;
+    border-radius: 5px;
+    padding: 8px 35px;
+  }
+  &_show {
+    border: 1px solid #A5CAE4;
+    border-radius: 5px;
+    background: none;
+    width: 100%;
+    padding: 5px;
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #176093;
+    margin-top: 10px;
+  }
 }
 </style>

@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "esnext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "useDefineForClassFields": true,
-
+    "sourceMap": true,
+    "allowJs": true,
+    "outDir": "dist",
+    "sourceRoot": "src",
     // Required in Vue projects
     "jsx": "preserve",
 
@@ -29,7 +32,7 @@
     //   So don't change the `target` field here. It has to be
     //   at least `ES2020` for dynamic `import()`s and `import.meta` to work correctly.
     // - If you are not using Vite, feel free to override the `target` field.
-    "target": "ESNext",
+    "target": "esnext",
 
     // Recommended
     "esModuleInterop": true,

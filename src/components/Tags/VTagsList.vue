@@ -1,5 +1,5 @@
 <template>
-<div class="tag_body" v-for="item of filteredData">
+<div class="tag" v-for="item of filteredData">
   <input class="tag_check" type="checkbox" v-bind:id="item.id" v-bind:value="item.tag" v-model="$store.state.tagsStore.checkedTags">
   <label class="tag_label" v-bind:for="item.id">{{item.tag}}</label>
 </div>
@@ -32,23 +32,23 @@ const filteredData = computed(() => {
 });
 </script>
 
-<style scoped>
-.tag_body {
+<style scoped lang="scss">
+.tag {
   margin-top: 10px;
   display: flex;
   gap: 15px;
   text-align: left;
-}
-.tag_check {
-  width: 15px;
-  border: none;
-}
-.tag_label {
-  font-family: 'Inter',sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #176093;
+  &_check {
+    width: 15px;
+    border: none;
+  }
+  &_label {
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #176093;
+  }
 }
 </style>

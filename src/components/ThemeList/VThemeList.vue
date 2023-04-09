@@ -1,11 +1,11 @@
 <template>
-  <div class="themeList_main">
-    <div class="themeList_body">
+  <div class="themes">
+    <div class="themes_list">
       <ThemeItem v-for="item of displayedMessage" :model="item"></ThemeItem>
     </div>
-    <div class="pagination_body">
-      <router-link :to="`${$route.path}?page=${page}${$route.query.id ? '&id='+$route.query.id : ''}`" v-for="page in listOfPages()" :key="page" class="pagination">
-        <span class="pagination_number">{{page}}</span>
+    <div class="themes_pagination">
+      <router-link :to="`${$route.path}?page=${page}${$route.query.id ? '&id='+$route.query.id : ''}`" v-for="page in listOfPages()" :key="page" class="themes_pagination-buttons">
+        <span class="themes_pagination-number">{{page}}</span>
       </router-link>
     </div>
   </div>
@@ -69,35 +69,35 @@ const displayedMessage = computed(() => {
 
 </script>
 
-<style scoped>
-.themeList_body {
-  border: 1px solid #A5CAE4;
-  border-radius: 5px;
-  margin: 25px 0 25px 120px;
-  flex: 1 1 auto;
-}
-.themeList_main {
+<style scoped lang="scss">
+.themes {
   width: 75%;
   min-height: 100%;
   display: flex;
   flex-direction: column;
-}
-.pagination {
-  border: 3px solid #176093;
-  border-radius: 5px;
-  padding: 5px 10px;
-}
-.pagination_body {
-  margin: 25px 120px;
-  display: flex;
-  gap: 10px;
-}
-.pagination_number {
-  font-family: 'Inter',sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  color: #969696;
+  &_list {
+    border: 1px solid #A5CAE4;
+    border-radius: 5px;
+    margin: 25px 0 25px 120px;
+    flex: 1 1 auto;
+  }
+  &_pagination {
+    margin: 25px 120px;
+    display: flex;
+    gap: 10px;
+    &-buttons {
+      border: 3px solid #176093;
+      border-radius: 5px;
+      padding: 5px 10px;
+    }
+    &-number {
+      font-family: 'Inter',sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 17px;
+      color: #969696;
+    }
+  }
 }
 </style>

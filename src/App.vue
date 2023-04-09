@@ -11,7 +11,6 @@
 <script setup lang="ts">
 
 import VHeader from "./components/Header/VHeader.vue";
-import VSubHeader from "./components/Header/VSubHeader.vue";
 import VFooter from "./components/Footer/VFooter.vue";
 </script>
 
