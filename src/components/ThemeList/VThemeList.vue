@@ -4,20 +4,31 @@
       <ThemeItem v-for="item of displayedMessage" :model="item"></ThemeItem>
     </div>
     <div class="pagination_body">
-      <button v-for="page in totalPages" :key="page" class="pagination" @click="currentPage = page">
+      <router-link :to="`${$route.path}?page=${page}${$route.query.id ? '&id='+$route.query.id : ''}`" v-for="page in listOfPages()" :key="page" class="pagination">
         <span class="pagination_number">{{page}}</span>
-      </button>
+      </router-link>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from "vue";
+import {computed, ref, onMounted, watch, reactive} from "vue";
 import {useStore} from "vuex";
 import ThemeItem from "./VThemeItem.vue";
 import json from "../../json/message.json"
+import {useRoute} from "vue-router";
 const store = useStore()
+const route = useRoute()
 
+onMounted(() => {
+  setCurrentPage()
+})
+watch(() => route.query.page, setCurrentPage)
+function setCurrentPage(){
+  let page:any = route.query.page
+  if (!page) page = 1
+  store.state.currentPage = page
+}
 let dataStr = JSON.stringify(json)
 let data = JSON.parse(dataStr)
 const message = ref(data)
@@ -30,14 +41,27 @@ const filteredMessage = computed(() => {
     })
   }
 })
-
-const currentPage = ref(1)
-const itemsPerPage = 7
-const totalPages = computed(() => Math.ceil(filteredMessage.value.length / itemsPerPage))
-
+function listOfPages():number[]{
+  const arr = []
+  const currentPage = +store.state.currentPage
+  if (currentPage > store.state.totalPages) return []
+  arr.push(1)
+  for (let i = currentPage - 4; i < currentPage ; i++){
+    if (i < 2) continue
+    arr.push(i)
+  }
+  for (let i = currentPage; i <= currentPage + 4 ; i++){
+    if (i === 1) continue
+    if (i > store.state.totalPages - 1) break
+    arr.push(i)
+  }
+  arr.push(store.state.totalPages)
+  return arr
+}
+store.state.totalPages = Math.ceil(filteredMessage.value.length / store.getters.getNumItemsPerPage);
 const displayedMessage = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
+  const startIndex = (store.state.currentPage - 1) * store.getters.getNumItemsPerPage
+  const endIndex = startIndex + store.getters.getNumItemsPerPage
   return filteredMessage.value.slice(startIndex, endIndex)
 })
 
