@@ -1,6 +1,7 @@
-import json from "../json/users.json";
-import {ref} from "vue";
-
+import {computed} from "vue";
+import {useUserStore} from "./users";
+import {useStore} from "vuex";
+const store = useStore();
 export default {
     state: {
         isLogin: false,
@@ -25,7 +26,7 @@ export default {
             state.errorPassword = state.errorLogin = state.errorEmail = false
         },
         closeClickHandler(state: any):void{
-            state.isActive = false
+            state.isActive = state.isActive = false;
         },
         loginOpen(state: any): void {
             state.isActive = true
@@ -34,29 +35,68 @@ export default {
             state.isLogin = false
             state.isAdmin = "User"
         },
-        login(state: any): void {
-            let dataStr = JSON.stringify(json)
-            let data = JSON.parse(dataStr)
-            let usersData = ref(data)
-            for (let item in usersData.value) {
-                if (usersData.value[item].login === state.inputLogin && usersData.value[item].password === state.inputPassword) {
-                    state.activeUser = {
-                        name: usersData.value[item].name
-                    }
-                    if (usersData.value[item].role === "Admin") {
-                        state.isAdmin = "Admin"
-                    } else {
-                        state.isAdmin = "User"
-                    }
-                    state.isBanned = usersData.value[item].isBanned === true;
-                    state.isLogin = true;
-                    state.isActive = false;
+
+    },
+    actions: {
+        async login({state}: any): Promise<void> {
+            const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
+            const userStore = useUserStore()
+            if (state.inputLogin.length < 3){
+                state.errorLogin = true
+            }
+            if (state.inputEmail.length < 3 && !state.haveAccount){
+                state.errorEmail = true
+            }
+            if ((state.inputPassword !== state.inputPasswordRepeat && !state.haveAccount) || state.inputPassword.length <= 6){
+                state.errorPassword = true
+                return
+            }
+            if (state.haveAccount){
+                console.log(`${state.inputLogin}, ${state.inputPassword} `)
+                const requestBody = {
+                    email: state.inputLogin,
+                    password: state.inputPassword
+                }
+                try {
+                    const response = await fetch(`${apiUrl.value}/user/login`, {
+                        method: "POST",
+                        body: JSON.stringify(requestBody),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    const token = await response.json();
+                    userStore.setToken(token.token);
+                    userStore.setUsername(token.user.login);
+                    state.isActive = state.isActive = false;
+                }catch (e){
+                    alert('Something went wrong' + e);
+                }
+            } else {
+                console.log(`${state.inputLogin}, ${state.inputEmail}, ${state.inputPassword}, ${state.inputPasswordRepeat} `)
+                const requestBody = {
+                    login: state.inputLogin,
+                    email: state.inputEmail,
+                    password: state.inputPassword
+                }
+                try {
+                    const response = await fetch(`${apiUrl.value}/user/register`, {
+                        method: "POST",
+                        body: JSON.stringify(requestBody),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    const token = await response.json()
+                    userStore.setToken(token.token);
+                    userStore.setUsername(token.user.login);
+                    state.isActive = state.isActive = false;
+                }
+                catch (e){
+                    alert('Something went wrong')
                 }
             }
         }
-    },
-    actions: {
-
     },
     modules: {
 

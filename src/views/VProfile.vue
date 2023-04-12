@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="profile_body">
-      <h3 class="profile_title">Доброго дня,<span class="profile_username">{{$store.state.loginStore.activeUser.name}}</span>!</h3>
+      <h3 class="profile_title">Доброго дня,<span class="profile_username">{{name}}</span>!</h3>
       <p class="profile_subtitle">Для зміни логіна заповни нижче поле</p>
       <div class="profile_update">
         <input class="profile_input" type="text">
@@ -16,12 +16,46 @@
 </template>
 
 <script setup lang="ts">
-
+import {computed, reactive} from "vue";
+import { useUserStore } from "../store/users";
+const userStore = useUserStore()
+const name = computed(() => {
+  if (userStore.username !== undefined){
+    return userStore.username;
+  }
+  return "DefaultName"
+})
+const store = reactive({
+  inputNewLogin: '',
+  inputOldPassword: '',
+  inputNewPassword: '',
+  inputNewPasswordRepeat: '',
+  errorNewLogin: false,
+  errorOldPassword: false,
+  errorNewPassword: false,
+})
+function changeLogin(){
+  if (store.inputNewLogin.length > 3){
+    console.log('change login event')
+  } else {
+    store.errorNewLogin = true
+  }
+}
+function changePassword(){
+  if (store.inputNewPassword.length >= 6 && store.inputNewPassword === store.inputNewPasswordRepeat){
+    console.log('change password event')
+  } else {
+    store.errorNewPassword = true
+  }
+}
+function disableErrors(){
+  store.errorNewLogin = store.errorOldPassword = store.errorNewPassword = false
+}
 </script>
 
 <style scoped lang="scss">
 .profile {
-  margin: 50px;
+  margin: 50px 120px;
   &_body {
     display: flex;
     flex-direction: column;

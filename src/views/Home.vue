@@ -3,7 +3,7 @@
     <ThemeList></ThemeList>
     <div class="home_rightSide">
       <VTagsBlock></VTagsBlock>
-      <div v-if="!$store.state.loginStore.isLogin" class="home_create">
+      <div v-if="!isLogged" class="home_create">
         <p>Щоб створити тему будь ласка зареєструйтесь</p>
       </div>
       <div v-else-if="$store.state.loginStore.isBanned" class="home_create">
@@ -19,6 +19,12 @@
 import ThemeList from "../components/ThemeList/VThemeList.vue";
 import VTagsBlock from "../components/Tags/VTagsBlock.vue";
 import VForumStats from "../components/ForumStats/VForumStats.vue";
+import {computed} from "vue";
+import { useUserStore } from "../store/users";
+const userStore = useUserStore()
+const isLogged = computed(() => {
+  return userStore.token !== undefined;
+})
 </script>
 
 <style scoped lang="scss">

@@ -2,9 +2,9 @@ import Home from "../views/Home.vue";
 import {createRouter, createWebHistory} from "vue-router";
 import VPost from "../views/VPost.vue";
 import VCreatePost from "../views/VCreatePost.vue";
-import VUserInfo from "../views/VUserInfo.vue"
-
-
+import VProfile from "../views/VProfile.vue"
+import {useStore} from "vuex";
+const store = useStore()
 const routes =[
     {
         path:'/',
@@ -22,9 +22,16 @@ const routes =[
         name: "createTheme",
     },
     {
-        path:'/userInfo',
-        component: VUserInfo,
-        name: "userInfo",
+        path:'/profile',
+        component: VProfile,
+        name: "profile",
+        beforeEach: (to: any, from: any, next: any) => {
+            if (store.state.loginStore.isLogin) {
+                next();
+            } else {
+                next('/');
+            }
+        },
     }
 ]
 

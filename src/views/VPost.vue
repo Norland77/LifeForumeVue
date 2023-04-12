@@ -21,7 +21,7 @@
       <p class="post_data">{{setData.setData(item.data)}}</p>
     </div>
   </div>
-  <div v-if="!$store.state.loginStore.isLogin" class="post_noLogin">
+  <div v-if="!isLogged" class="post_noLogin">
     <p>
       Для відповіді на  цю тему будь ласка увійдіть або створіть новий акаунт
     </p>
@@ -50,6 +50,12 @@ let messages = ref(data)
 const route = useRoute()
 let message = ref(data)
 
+import {computed} from "vue";
+import { useUserStore } from "../store/users";
+const userStore = useUserStore()
+const isLogged = computed(() => {
+  return userStore.token !== undefined;
+})
 
 for(let item in messages.value) {
   if (messages.value[item].id == route.params.id) {

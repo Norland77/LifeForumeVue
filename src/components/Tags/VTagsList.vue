@@ -1,7 +1,7 @@
 <template>
 <div class="tag" v-for="item of filteredData">
-  <input class="tag_check" type="checkbox" v-bind:id="item.id" v-bind:value="item.tag" v-model="$store.state.tagsStore.checkedTags">
-  <label class="tag_label" v-bind:for="item.id">{{item.tag}}</label>
+  <input class="tag_check" type="checkbox" v-bind:id="item" v-bind:value="item" v-model="$store.state.tagsStore.checkedTags">
+  <label class="tag_label" v-bind:for="item">{{item}}</label>
 </div>
 </template>
 
@@ -9,12 +9,8 @@
 import { computed } from "vue";
 
 
-interface TypeData {
-  id: number,
-  tag: string
-}
 interface TypeProps {
-  data: TypeData[],
+  data: String[],
   filterKey: string,
   tagsCount: number
 }
@@ -23,11 +19,12 @@ const props = withDefaults(defineProps<TypeProps>(), {
   filterKey: String,
   tagsCount: Number
 })
+console.log(props.data)
 const filteredData = computed(() => {
-  let { data, filterKey, tagsCount } = props;
+  const { data, filterKey, tagsCount } = props;
   return data
-      .filter(item => item.tag.toLowerCase().startsWith(filterKey.toLowerCase()))
-      .sort((a, b) => a.tag.localeCompare(b.tag))
+      .filter(item => item.toLowerCase().startsWith(filterKey.toLowerCase()))
+      .sort((a, b) => a.localeCompare(b.toString()))
       .slice(0, tagsCount);
 });
 </script>

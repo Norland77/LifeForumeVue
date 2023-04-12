@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, onMounted, watch, reactive} from "vue";
+import {computed, ref, onMounted, watch, watchEffect} from "vue";
 import {useStore} from "vuex";
 import ThemeItem from "./VThemeItem.vue";
 import json from "../../json/message.json"
@@ -58,12 +58,18 @@ function listOfPages():number[]{
   arr.push(store.state.totalPages)
   return arr
 }
-store.state.totalPages = Math.ceil(filteredMessage.value.length / store.getters.getNumItemsPerPage);
 const displayedMessage = computed(() => {
   const startIndex = (store.state.currentPage - 1) * store.getters.getNumItemsPerPage
   const endIndex = startIndex + store.getters.getNumItemsPerPage
   return filteredMessage.value.slice(startIndex, endIndex)
 })
+store.state.totalPages = Math.ceil(filteredMessage.value.length / store.getters.getNumItemsPerPage);
+watchEffect(() => {
+  store.state.totalPages = Math.ceil(filteredMessage.value.length / store.getters.getNumItemsPerPage);
+})
+
+
+console.log(displayedMessage.value.length)
 
 
 

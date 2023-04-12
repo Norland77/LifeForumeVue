@@ -3,28 +3,41 @@
     <form  id="tags_search">
       <input class="tags_input" placeholder="Пошук тегів" name="query" v-model="searchQuery">
     </form>
-    <VTagsList :tagsCount="tagsCount" :data="tagsData" :filter-key="searchQuery">></VTagsList>
-    <button @click="showMore" class="tags_show">{{buttonName}}</button>
+    <VTagsList :tagsCount="tagsCount" :data="store.tagsData" :filter-key="searchQuery">></VTagsList>
+    <button v-if="store.tagsData.length > 13" @click="showMore" class="tags_show">{{buttonName}}</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import {computed, onMounted, ref, reactive} from "vue";
 import VTagsList from "./VTagsList.vue";
-import json from "../../json/tags.json";
+
+const store = reactive({
+  tagsData: []
+})
+
+const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
+async function getTags() {
+  const response = await fetch(`${apiUrl.value}/tags/get/all`, {
+    method: "GET",
+  })
+  const result = await response.json();
+  console.log(result.tags)
+  store.tagsData = result.tags
+}
+
+onMounted(getTags)
 
 let tagsCount = ref(13)
 const searchQuery = ref('')
 let buttonName = ref('Більше')
-let dataStr = JSON.stringify(json)
-let data = JSON.parse(dataStr)
-const tagsData = data
+
 function showMore () {
-  if (tagsCount.value === tagsData.length) {
+  if (tagsCount.value === store.tagsData.length) {
     tagsCount.value = 13
     buttonName.value = "Більше";
   } else {
-    tagsCount.value = tagsData.length;
+    tagsCount.value = store.tagsData.length;
     buttonName.value = "Сховати";
   }
 }
@@ -51,20 +64,6 @@ function showMore () {
     border: 1px solid #A5CAE4;
     border-radius: 5px;
     padding: 8px 35px;
-  }
-  &_show {
-    border: 1px solid #A5CAE4;
-    border-radius: 5px;
-    background: none;
-    width: 100%;
-    padding: 5px;
-    font-family: 'Inter',sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 22px;
-    color: #176093;
-    margin-top: 10px;
   }
 }
 </style>
