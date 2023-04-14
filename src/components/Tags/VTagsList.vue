@@ -1,6 +1,6 @@
 <template>
 <div class="tag" v-for="item of filteredData">
-  <input class="tag_check" type="checkbox" v-bind:id="item" v-bind:value="item" v-model="$store.state.tagsStore.checkedTags">
+  <input @click="test" class="tag_check" type="checkbox" v-bind:id="item" v-bind:value="item" v-model="$store.state.tagsStore.checkedTags">
   <label class="tag_label" v-bind:for="item">{{item}}</label>
 </div>
 </template>
@@ -8,6 +8,11 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import {useStore} from "vuex";
+const store = useStore()
+function test() {
+  console.log(store.state.tagsStore.checkedTags)
+}
 
 interface TypeProps {
   data: String[],

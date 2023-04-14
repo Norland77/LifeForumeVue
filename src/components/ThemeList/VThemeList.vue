@@ -34,8 +34,6 @@ function setCurrentPage(){
   if (!page) page = 1
   store.state.currentPage = page
 }
-let dataStr = JSON.stringify(json)
-let data = JSON.parse(dataStr)
 
 const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
 async function getAllThemes() {
@@ -50,11 +48,12 @@ async function getAllThemes() {
 const filteredMessage = computed(() => {
   const tags = store.state.tagsStore.checkedTags;
   const message = stored.message;
+  console.log(message)
   if (tags.length === 0) {
     return message;
   } else {
     return message.filter((post: { tags: any[] }) => {
-      return post.tags.some(tag => tags.includes(tag));
+      return post.tags.some(tag => tags.includes(tag.name));
     });
   }
 });
