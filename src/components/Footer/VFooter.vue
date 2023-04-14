@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <button class="footer_btn">Правила</button>
+    <router-link class="footer_btn" :to="{name: 'rules'}">Правила</router-link>
     <router-link class="footer_btn" :to="{name: 'home'}">Форум</router-link>
   </div>
 </template>

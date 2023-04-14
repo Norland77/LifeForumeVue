@@ -4,6 +4,7 @@ import VPost from "../views/VPost.vue";
 import VCreatePost from "../views/VCreatePost.vue";
 import VProfile from "../views/VProfile.vue"
 import {useStore} from "vuex";
+import VRules from "../views/VRules.vue";
 const store = useStore()
 const routes =[
     {
@@ -22,16 +23,14 @@ const routes =[
         name: "createTheme",
     },
     {
+        path:'/rules',
+        component: VRules,
+        name: "rules",
+    },
+    {
         path:'/profile',
         component: VProfile,
         name: "profile",
-        beforeEach: (to: any, from: any, next: any) => {
-            if (store.state.loginStore.isLogin) {
-                next();
-            } else {
-                next('/');
-            }
-        },
     }
 ]
 

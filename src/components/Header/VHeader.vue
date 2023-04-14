@@ -4,7 +4,7 @@
     <VLoginButton ></VLoginButton>
   </div>
   <div class="header_subtitle">
-    <button class="header_subtitle-btn">Правила</button>
+    <router-link class="header_subtitle-btn" :to="{name: 'rules'}">Правила</router-link>
     <router-link class="header_subtitle-btn" :to="{name: 'home'}">Форум</router-link>
   </div>
 </template>
