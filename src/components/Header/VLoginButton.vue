@@ -6,7 +6,7 @@
       <img src="../../assets/img/exit.svg" alt="exit">
     </router-link>
   </div>
-  <button v-else @click="$store.commit('loginOpen')" class="login_button" >Увійти або зареєструватися</button>
+  <button v-else @click="$store.commit('loginOpen')" class="login_button" ><span>Увійти</span> або <span >зареєструватися</span></button>
   <div v-if="$store.state.loginStore.isActive" class="login_popup popup" @click="$store.commit('closeClickHandler')">
     <div class="popup_content" @click.stop="$store.commit('disableErrors')">
       <h2 class="popup_content-title">{{$store.state.loginStore.haveAccount ? "Увійти" : "Зареєструватися"}}</h2>

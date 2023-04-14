@@ -1,15 +1,21 @@
 <template>
 <div class="post">
   <div class="post_header">
-    <h3 class="post_title">{{message.title}}</h3>
+    <h3 class="post_title">{{store.data.title}}</h3>
     <button v-if="$store.state.loginStore.isAdmin === 'Admin'" class="post_admin">Видалити тему</button>
   </div>
   <div class="post_tags">
-    <p  v-for="item of message.tags">{{item}}</p>
+<!--    <p  v-for="item of message.tags">{{item}}</p>-->
   </div>
-  <div class="post_item item" v-for="item of message.messages">
+  <div class="post_textBody">
+    {{store.data.body}}
+  </div>
+  <div v-if="store.data.comments.length === 0" class="post_noComments">
+    Ця тема поки не має коментарів, додайте перший коментар
+  </div>
+  <div class="post_item item" v-for="item of store.data.comments">
     <div class="item_user">
-      <p class="item_username"> {{ item.user }}</p>
+      <p class="item_username"> {{ item.user.login }}</p>
       <p class="item_role">{{$store.state.loginStore.isAdmin}}</p>
       <div v-if="$store.state.loginStore.isAdmin === 'Admin'">
         <button v-if="$store.state.loginStore.isBanned" class="post_admin-ban">Розбанити</button>
@@ -17,8 +23,8 @@
       </div>
     </div>
     <div class="post_messages">
-      <p class="post_message">{{item.message}}</p>
-      <p class="post_data">{{setData.setData(item.data)}}</p>
+      <p class="post_message">{{item.body}}</p>
+      <p class="post_data">{{setData.setData(item.createdAt)}}</p>
     </div>
   </div>
   <div v-if="!isLogged" class="post_noLogin">
@@ -31,41 +37,86 @@
       Нажаль вас заблоковано адміністрацією, тому ви не можете писати коментарі, дочекайтесь поки вас розблокують
     </p>
   </div>
-  <form v-else>
-    <textarea class="post_textarea"></textarea>
+  <form v-on:submit.prevent="createComment" v-else>
+    <textarea v-model="store.textareaBody" class="post_textarea"></textarea>
     <button class="post_button">Відправити</button>
   </form>
 </div>
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import {onMounted, ref} from "vue";
-import json from "../json/message.json";
+
 import setData from "../helpers/index"
 
-let dataStr = JSON.stringify(json)
-let data = JSON.parse(dataStr)
-let messages = ref(data)
-const route = useRoute()
-let message = ref(data)
+interface userType {
+  email: string,
+  login: string,
+  _id: string
+}
+interface commentsType {
+  body: string,
+  createdAt: string,
+  user: userType
+}
 
-import {computed} from "vue";
+interface dataType {
+  _id: string,
+  title: string,
+  body: string,
+  comments: commentsType[]
+}
+
+interface IData {
+  data: dataType,
+  textareaBody: string
+}
+
+import {computed, onMounted, reactive} from "vue";
+import {useRoute} from "vue-router";
 import { useUserStore } from "../store/users";
 const userStore = useUserStore()
 const isLogged = computed(() => {
   return userStore.token !== undefined;
 })
 
-for(let item in messages.value) {
-  if (messages.value[item].id == route.params.id) {
-    message = {
-      title: messages.value[item].title,
-      tags: messages.value[item].tags,
-      messages: messages.value[item].messages
-    }
-  }
+const route = useRoute()
+const store = reactive<IData>({
+  data: {
+    _id: "",
+    title: "",
+    body: "",
+    comments: []
+  },
+  textareaBody: ""
+})
+onMounted(getThemesById)
+const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
+async function getThemesById() {
+  const response = await fetch(`${apiUrl.value}/theme/get/${route.params.id}`, {
+    method: "GET",
+  })
+  const result = await response.json();
+  store.data = result
+  console.log(store.data)
 }
+
+async function createComment () {
+  const requestBody = {
+    body: store.textareaBody,
+    themeId: store.data._id
+  }
+  await fetch(`${apiUrl.value}/comment/create`, {
+    method: "POST",
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userStore.token}`
+    },
+  });
+  await getThemesById();
+  store.textareaBody = "";
+}
+
 
 </script>
 
@@ -77,6 +128,24 @@ for(let item in messages.value) {
   flex-direction: column;
   margin: 30px 120px;
   padding: 15px 40px;
+  &_textBody {
+    padding: 50px 0;
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 19px;
+    color: #141414;
+  }
+  &_noComments {
+    padding: 50px 0;
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 19px;
+    color: #141414;
+  }
   &_header {
     display: flex;
     gap: 25px;

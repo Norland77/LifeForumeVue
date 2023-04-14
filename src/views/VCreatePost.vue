@@ -2,27 +2,61 @@
   <div class="createTheme">
     <div class="createTheme_body">
       <h3 class="createTheme_title">Створення теми</h3>
-      <div class="createTheme_form">
-        <p class="createTheme_subtitle">Заголовок</p>
+      <form v-on:submit.prevent="createTheme" class="createTheme_form">
+        <label class="createTheme_subtitle">Заголовок</label>
         <input
+            v-model="store.title"
             type="text"
             class="createTheme_input"
         >
-        <p class="createTheme_subtitle">Текст теми</p>
-        <textarea class="createTheme_textarea"></textarea>
-        <p class="createTheme_subtitle">Напишіть теги до теми у вигляді (життя, спорт, здоров’я, відеоігри)</p>
+        <label class="createTheme_subtitle">Текст теми</label>
+        <textarea v-model="store.textareaBody" class="createTheme_textarea"></textarea>
+        <label class="createTheme_subtitle">Напишіть теги до теми у вигляді (життя, спорт, здоров’я, відеоігри)</label>
         <input
+            v-model="store.tags"
             type="text"
             class="createTheme_input"
         >
-      </div>
-      <button class="createTheme_button">Створити тему</button>
+        <button class="createTheme_button">Створити тему</button>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import {computed, reactive} from "vue";
+import { useUserStore } from "../store/users";
+const userStore = useUserStore()
+const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
 
+const store = reactive({
+  title: "",
+  textareaBody: "",
+  tags: ""
+})
+
+async function createTheme () {
+  const tagsArr = store.tags.split(", ");
+
+  const requestBody = {
+    title: store.title,
+    body: store.textareaBody,
+    tags: tagsArr
+  }
+
+  await fetch(`${apiUrl.value}/theme/create`, {
+    method: "POST",
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userStore.token}`
+    },
+  });
+
+  store.textareaBody = "";
+  store.title = "";
+  store.tags = "";
+}
 </script>
 
 <style scoped lang="scss">
@@ -52,6 +86,7 @@
     color: #032A46;
   }
   &_form {
+    align-items: center;
     display: flex;
     flex-direction: column;
     gap: 15px;

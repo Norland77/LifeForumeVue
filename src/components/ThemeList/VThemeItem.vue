@@ -3,40 +3,53 @@
   <div class="theme_leftSide">
     <img class="theme_img" src="../../assets/img/MessageIcon.svg" alt="Message">
     <div class="theme_leftSide-body">
-      <router-link  :to="{ name: 'post', params: {id: model.id} }">
+      <router-link  :to="{ name: 'post', params: {id: data._id} }">
         <p class="theme_leftSide-title">
-          {{ model.title }}
+          {{ data.title }}
         </p>
       </router-link>
       <div class="theme_leftSide-by">
-        <p class="theme_leftSide-count">Повідомлення: {{model.messages.length}}</p>
-        <div class="theme_leftSide-tags" v-for="item of model.tags">
-          <span>{{item}}</span>
+        <p class="theme_leftSide-count">Повідомлення: {{data.commentCount}}</p>
+        <div class="theme_leftSide-tags" v-for="item of data.tags">
+          <span>{{item.name}}</span>
         </div>
       </div>
     </div>
   </div>
   <div class="theme_rightSide">
     <p class="theme_rightSide-lastTxt">Останнє:</p>
-    <p class="theme_rightSide-last"><span class="theme_rightSide-lastUser">{{model.messages.at(-1).user}}</span><span class="theme_rightSide-lastData">{{setData.setData(model.messages.at(-1).data)}}</span></p>
+    <p v-if="data.commentCount > 0" class="theme_rightSide-last"><span class="theme_rightSide-lastUser">{{data.lastComment.createdBy}}</span><span class="theme_rightSide-lastData">{{setData.setData(data.lastComment.createdAt)}}</span></p>
   </div>
 </div>
 </template>
 
 <script setup lang="ts">
 import setData from '../../helpers/index'
-interface ModelProps {
-  id: number
-  title: string,
-  messages: object[],
-  tags: string[]
+interface CommentType {
+  createdAt: string,
+  createdBy: string
 }
+
+interface TagsType {
+  _id: string,
+  name: string
+}
+
+interface CommentsProps {
+  _id: string
+  title: string,
+  commentCount: number,
+  lastComment: CommentType
+  tags: TagsType[]
+}
+
 interface TypeProps {
-  model: ModelProps
+  data: CommentsProps
 }
 const props = withDefaults(defineProps<TypeProps>(), {
-  model: Object
+  data: Object
 })
+
 
 </script>
 

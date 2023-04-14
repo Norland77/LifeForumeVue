@@ -1,9 +1,9 @@
 <template>
   <div class="themes">
     <div class="themes_list">
-      <ThemeItem v-for="item of displayedMessage" :model="item"></ThemeItem>
+      <ThemeItem v-for="item of displayedMessage" :data="item"></ThemeItem>
     </div>
-    <div class="themes_pagination">
+    <div v-if="filteredMessage.length > 7" class="themes_pagination">
       <router-link :to="`${$route.path}?page=${page}${$route.query.id ? '&id='+$route.query.id : ''}`" v-for="page in listOfPages()" :key="page" class="themes_pagination-buttons">
         <span class="themes_pagination-number">{{page}}</span>
       </router-link>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref, onMounted, watch, watchEffect} from "vue";
+import {computed, ref, onMounted, watch, watchEffect, reactive} from "vue";
 import {useStore} from "vuex";
 import ThemeItem from "./VThemeItem.vue";
 import json from "../../json/message.json"
@@ -20,8 +20,13 @@ import {useRoute} from "vue-router";
 const store = useStore()
 const route = useRoute()
 
+const stored = reactive({
+  message: []
+})
+
 onMounted(() => {
-  setCurrentPage()
+  setCurrentPage();
+  getAllThemes()
 })
 watch(() => route.query.page, setCurrentPage)
 function setCurrentPage(){
@@ -31,16 +36,30 @@ function setCurrentPage(){
 }
 let dataStr = JSON.stringify(json)
 let data = JSON.parse(dataStr)
-const message = ref(data)
+
+const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
+async function getAllThemes() {
+  const response = await fetch(`${apiUrl.value}/theme/get/all`, {
+    method: "GET",
+  })
+  const result = await response.json();
+  console.log(result.themes)
+  stored.message = result.themes
+}
+
 const filteredMessage = computed(() => {
-  if (store.state.tagsStore.checkedTags.length === 0) {
-    return message.value;
+  const tags = store.state.tagsStore.checkedTags;
+  const message = stored.message;
+  if (tags.length === 0) {
+    return message;
   } else {
-    return message.value.filter((post: { tags: any[]; }) => {
-      return post.tags.some(tag => store.state.tagsStore.checkedTags.includes(tag))
-    })
+    return message.filter((post: { tags: any[] }) => {
+      return post.tags.some(tag => tags.includes(tag));
+    });
   }
-})
+});
+
+console.log(filteredMessage)
 function listOfPages():number[]{
   const arr = []
   const currentPage = +store.state.currentPage
@@ -59,10 +78,10 @@ function listOfPages():number[]{
   return arr
 }
 const displayedMessage = computed(() => {
-  const startIndex = (store.state.currentPage - 1) * store.getters.getNumItemsPerPage
-  const endIndex = startIndex + store.getters.getNumItemsPerPage
-  return filteredMessage.value.slice(startIndex, endIndex)
-})
+  const startIndex = (store.state.currentPage - 1) * store.getters.getNumItemsPerPage;
+  const endIndex = startIndex + store.getters.getNumItemsPerPage;
+  return filteredMessage.value.slice(startIndex, endIndex);
+});
 store.state.totalPages = Math.ceil(filteredMessage.value.length / store.getters.getNumItemsPerPage);
 watchEffect(() => {
   store.state.totalPages = Math.ceil(filteredMessage.value.length / store.getters.getNumItemsPerPage);

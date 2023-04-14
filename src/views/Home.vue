@@ -41,7 +41,7 @@ const isLogged = computed(() => {
     border: 1px solid #A5CAE4;
     border-radius: 5px;
     width: 100%;
-    padding: 40px 0;
+    padding: 40px 5px;
     background: none;
     font-family: 'Inter',sans-serif;
     font-style: normal;
