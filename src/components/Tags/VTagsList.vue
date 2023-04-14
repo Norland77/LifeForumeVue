@@ -35,20 +35,21 @@ const filteredData = computed(() => {
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/main.scss";
 .tag {
-  margin-top: 10px;
+  @include adaptive-value("margin-top", 10, 0, 1);
   display: flex;
-  gap: 15px;
+  @include adaptive-value("gap", 15, 0, 1);
   text-align: left;
   &_check {
-    width: 15px;
+    @include adaptive-value("width", 15, 5, 1);
     border: none;
   }
   &_label {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 18px;
+    @include adaptive-value("font-size", 18, 6, 1);
     line-height: 22px;
     color: #176093;
   }

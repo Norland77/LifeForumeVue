@@ -15,7 +15,6 @@
 import {computed, ref, onMounted, watch, watchEffect, reactive} from "vue";
 import {useStore} from "vuex";
 import ThemeItem from "./VThemeItem.vue";
-import json from "../../json/message.json"
 import {useRoute} from "vue-router";
 const store = useStore()
 const route = useRoute()
@@ -94,6 +93,7 @@ console.log(displayedMessage.value.length)
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/main.scss";
 .themes {
   width: 75%;
   min-height: 100%;
@@ -102,23 +102,32 @@ console.log(displayedMessage.value.length)
   &_list {
     border: 1px solid #A5CAE4;
     border-radius: 5px;
-    margin: 25px 0 25px 120px;
+    @include adaptive-value("margin-top", 25, 0, 1);
+    @include adaptive-value("margin-bottom", 25, 0, 1);
+    @include adaptive-value("margin-left", 120, -25, 1);
     flex: 1 1 auto;
   }
   &_pagination {
-    margin: 25px 120px;
+    @include adaptive-value("margin-top", 25, 0, 1);
+    @include adaptive-value("margin-bottom", 25, 0, 1);
+    @include adaptive-value("margin-left", 120, 0, 1);
+    @include adaptive-value("margin-right", 120, 0, 1);
     display: flex;
-    gap: 10px;
+    @include adaptive-value("gap", 10, 0, 0);
     &-buttons {
       border: 3px solid #176093;
       border-radius: 5px;
-      padding: 5px 10px;
+      @include adaptive-value("width", 35, 15, 1);
+      @include adaptive-value("padding-top", 5, 0, 1);
+      @include adaptive-value("padding-bottom", 5, 0, 1);
+      @include adaptive-value("padding-left", 10, 0, 1);
+      @include adaptive-value("padding-right", 10, 0, 1);
     }
     &-number {
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 14px;
+      @include adaptive-value("font-size", 14, 8, 1);
       line-height: 17px;
       color: #969696;
     }

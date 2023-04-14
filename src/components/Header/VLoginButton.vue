@@ -77,10 +77,11 @@ function loginClickHandler(haveAccount: boolean): void{
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/main.scss";
 .login {
   align-items: center;
   text-align: center;
-  width: 10%;
+  width: 15%;
   background: #032A46;
   box-shadow: 0 2px 5px #032A46;
   border-radius: 0 0 10px 10px;
@@ -88,7 +89,7 @@ function loginClickHandler(haveAccount: boolean): void{
     font-family: 'Liberation Sans',sans-serif;
     font-style: italic;
     font-weight: 400;
-    font-size: 10px;
+    @include adaptive-value("font-size", 10, 6, 1);
     line-height: 20px;
     color: #FFFFFF;
     background: none;
@@ -99,12 +100,13 @@ function loginClickHandler(haveAccount: boolean): void{
     align-items: center;
     text-align: center;
     justify-content: space-between;
-    padding: 0 10px;
+    @include adaptive-value("padding-left", 10, 0, 1);
+    @include adaptive-value("padding-right", 10, 0, 1);
     &-name {
       font-family: 'Liberation Sans',sans-serif;
       font-style: italic;
       font-weight: 400;
-      font-size: 10px;
+      @include adaptive-value("font-size", 10, 6, 1);
       line-height: 20px;
       color: #FFFFFF;
     }
@@ -135,8 +137,11 @@ function loginClickHandler(haveAccount: boolean): void{
     flex-direction: column;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
-    padding: 10px 20px;
-    gap: 15px;
+    @include adaptive-value("padding-top", 10, 0, 1);
+    @include adaptive-value("padding-bottom", 10, 0, 1);
+    @include adaptive-value("padding-left", 20, 0, 1);
+    @include adaptive-value("padding-right", 20, 0, 1);
+    @include adaptive-value("gap", 15, 0, 0);
     width: 50%;
     background: #FCFCFF;
     align-items: center;
@@ -145,21 +150,22 @@ function loginClickHandler(haveAccount: boolean): void{
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 700;
-      font-size: 40px;
+      @include adaptive-value("font-size", 40, 24, 1);
       line-height: 46px;
       color: #032A46;
-      margin: 20px 0;
+      @include adaptive-value("margin-top", 20, 0, 1);
+      @include adaptive-value("margin-bottom", 20, 0, 1);
     }
     &-input {
       width: 100%;
-      height: 80px;
+      @include adaptive-value("height", 80, 40, 1);
       background: #D9D9D9;
       border-radius: 5px;
       border: none;
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 30px;
+      @include adaptive-value("font-size", 30, 18, 1);
       line-height: 37px;
       display: flex;
       align-items: center;
@@ -173,11 +179,14 @@ function loginClickHandler(haveAccount: boolean): void{
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 20px;
+      @include adaptive-value("font-size", 20, 16, 1);
       line-height: 37px;
       color: #000000;
       background: none;
-      padding: 10px;
+      @include adaptive-value("padding-top", 10, 0, 1);
+      @include adaptive-value("padding-bottom", 10, 0, 1);
+      @include adaptive-value("padding-left", 10, 0, 1);
+      @include adaptive-value("padding-right", 10, 0, 1);
       cursor: pointer;
     }
     &-submit {
@@ -187,11 +196,14 @@ function loginClickHandler(haveAccount: boolean): void{
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 30px;
+      @include adaptive-value("font-size", 30, 12, 1);
       line-height: 37px;
       color: #000000;
       background: none;
-      padding: 20px 40px;
+      @include adaptive-value("padding-top", 20, 0, 1);
+      @include adaptive-value("padding-bottom", 20, 0, 1);
+      @include adaptive-value("padding-left", 40, -10, 1);
+      @include adaptive-value("padding-right", 40, -10, 1);
     }
   }
 }

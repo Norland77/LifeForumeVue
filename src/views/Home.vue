@@ -28,25 +28,29 @@ const isLogged = computed(() => {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/main.scss";
 .home {
   display: flex;
-  gap: 25px;
+  @include adaptive-value("gap", 25, 10, 1);
   &_rightSide {
-    width: 15%;
+    width: 20%;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    @include adaptive-value("gap", 15, 5, 1);
   }
   &_create {
     border: 1px solid #A5CAE4;
     border-radius: 5px;
     width: 100%;
-    padding: 40px 5px;
+    @include adaptive-value("padding-top", 40, 0, 1);
+    @include adaptive-value("padding-bottom", 40, 0, 1);
+    @include adaptive-value("padding-left", 5, 0, 1);
+    @include adaptive-value("padding-right", 5, 0, 1);
     background: none;
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 18px;
+    @include adaptive-value("font-size", 18, 6, 1);
     line-height: 22px;
     color: #176093;
     text-align: center;

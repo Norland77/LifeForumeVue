@@ -22,6 +22,7 @@
 </script>
 
 <style scoped lang="scss">
+@import "../assets/main.scss";
 .rules {
   display: flex;
   flex-direction: column;
@@ -36,7 +37,7 @@
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 34px;
+    @include adaptive-value("font-size", 34, 24, 1);
     line-height: 42px;
     color: #176093;
   }
@@ -44,7 +45,7 @@
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #141414;
     margin-bottom: 10px;
@@ -53,12 +54,12 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    gap: 20px;
+    @include adaptive-value("gap", 20, 0, 1);
     &-item {
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 16px;
+      @include adaptive-value("font-size", 16, 12, 1);
       line-height: 19px;
       color: #141414;
     }

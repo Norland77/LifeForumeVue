@@ -44,26 +44,37 @@ function showMore () {
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/main.scss";
 .tags {
   width: 100%;
-  max-height: 550px;
+  @include adaptive-value("max-height", 550, 450, 1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: center;
-  margin-top: 25px;
-  margin-right: 120px;
+  @include adaptive-value("margin-top", 25, 0, 1);
+  @include adaptive-value("margin-right", 120, -25, 1);
   mix-blend-mode: normal;
   border: 1px solid #A5CAE4;
   border-radius: 5px;
-  padding: 10px;
+  @include adaptive-value("padding-top", 10, 0, 1);
+  @include adaptive-value("padding-bottom", 10, 0, 1);
+  @include adaptive-value("padding-left", 10, 0, 1);
+  @include adaptive-value("padding-right", 10, 0, 1);
   overflow-scrolling: auto;
   overflow: auto;
   overflow-x: hidden;
+  form {
+    width: 100%;
+  }
   &_input {
+    width: 100%;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
-    padding: 8px 35px;
+    @include adaptive-value("padding-top", 8, 0, 1);
+    @include adaptive-value("padding-bottom", 8, 0, 1);
+    @include adaptive-value("padding-left", 35, 0, 1);
+    @include adaptive-value("padding-right", 35, 0, 1);
   }
 }
 </style>

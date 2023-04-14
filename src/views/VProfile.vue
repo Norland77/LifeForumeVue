@@ -54,22 +54,29 @@ function disableErrors(){
 </script>
 
 <style scoped lang="scss">
+@import "../assets/main.scss";
 .profile {
-  margin: 50px 120px;
+  @include adaptive-value("margin-top", 50, 0, 1);
+  @include adaptive-value("margin-bottom", 50, 0, 1);
+  @include adaptive-value("margin-left", 120, 0, 1);
+  @include adaptive-value("margin-right", 120, 0, 1);
   &_body {
     display: flex;
     flex-direction: column;
     width: 100%;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
-    gap: 15px;
-    padding: 10px;
+    @include adaptive-value("gap", 15, 0, 1);
+    @include adaptive-value("padding-top", 10, 0, 1);
+    @include adaptive-value("padding-bottom", 10, 0, 1);
+    @include adaptive-value("padding-left", 10, 0, 1);
+    @include adaptive-value("padding-right", 10, 0, 1);
   }
   &_title {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 34px;
+    @include adaptive-value("font-size", 34, 24, 1);
     line-height: 42px;
     color: #969696;
   }
@@ -77,7 +84,7 @@ function disableErrors(){
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 34px;
+    @include adaptive-value("font-size", 34, 24, 1);
     line-height: 42px;
     color: #176093;
   }
@@ -85,25 +92,25 @@ function disableErrors(){
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    @include adaptive-value("font-size", 14, 10, 1);
     line-height: 17px;
     color: #969696;
   }
   &_update {
     display: flex;
     width: 100%;
-    gap: 15px;
+    @include adaptive-value("gap", 15, 0, 1);
     &-button {
       background: #A5CAE4;
       border-radius: 5px;
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 14px;
+      @include adaptive-value("font-size", 14, 10, 1);
       line-height: 17px;
       color: #141414;
       width: 10%;
-      height: 50px;
+      @include adaptive-value("height", 50, 25, 1);
       border: none;
     }
   }
@@ -111,7 +118,7 @@ function disableErrors(){
     width: 60%;
     border: 1px solid #969696;
     border-radius: 5px;
-    height: 50px;
+    @include adaptive-value("height", 50, 25, 1);
   }
 }
 </style>

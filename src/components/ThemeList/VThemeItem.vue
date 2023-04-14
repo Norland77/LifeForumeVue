@@ -54,14 +54,18 @@ const props = withDefaults(defineProps<TypeProps>(), {
 </script>
 
 <style scoped lang="scss">
+@import "../../assets/main.scss";
 .theme {
-  padding: 20px 20px;
+  @include adaptive-value("padding-top", 20, 0, 1);
+  @include adaptive-value("padding-bottom", 20, 0, 1);
+  @include adaptive-value("padding-left", 20, 0, 1);
+  @include adaptive-value("padding-right", 20, 0, 1);
   display: flex;
   justify-content: space-between;
   &_leftSide {
     width: 85%;
     display: flex;
-    gap: 12px;
+    @include adaptive-value("gap", 12, 0, 1);
     border-bottom: 2px solid #A5CAE4;
     border-radius: 5px;
     img {
@@ -76,7 +80,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 16px;
+      @include adaptive-value("font-size", 16, 8, 1);
       line-height: 19px;
       color: #176093;
       overflow: hidden;
@@ -85,11 +89,11 @@ const props = withDefaults(defineProps<TypeProps>(), {
     }
     &-by {
       display: flex;
-      gap: 10px;
+      @include adaptive-value("gap", 10, 0, 1);
       font-family: 'Roboto',sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 10px;
+      @include adaptive-value("font-size", 10, 0, 1);
       line-height: 22px;
       color: #000000;
     }
@@ -97,9 +101,10 @@ const props = withDefaults(defineProps<TypeProps>(), {
       font-family: 'Roboto',sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 10px;
+      @include adaptive-value("font-size", 10, 8, 1);
       line-height: 22px;
       color: #000000;
+
     }
     &-tags {
       display: flex;
@@ -107,9 +112,12 @@ const props = withDefaults(defineProps<TypeProps>(), {
         font-family: 'Roboto',sans-serif;
         font-style: normal;
         font-weight: 400;
-        font-size: 10px;
+        @include adaptive-value("font-size", 10, 8, 1);
         line-height: 22px;
         color: #000000;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }
@@ -117,9 +125,12 @@ const props = withDefaults(defineProps<TypeProps>(), {
     display: flex;
     flex-direction: column;
     min-width: 15%;
-    gap: 5px;
-    padding: 5px 10px;
-    border-width: 2px 2px 2px 2px;
+    @include adaptive-value("gap", 5, 0, 1);
+    @include adaptive-value("padding-top", 5, 0, 1);
+    @include adaptive-value("padding-bottom", 5, 0, 1);
+    @include adaptive-value("padding-left", 10, 0, 1);
+    @include adaptive-value("padding-right", 10, 0, 1);
+    border-width: 2px;
     border-style: solid;
     border-color: #A5CAE4;
     border-radius: 5px;
@@ -128,14 +139,14 @@ const props = withDefaults(defineProps<TypeProps>(), {
       font-family: 'Liberation Sans',sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 12px;
+      @include adaptive-value("font-size", 12, 8, 1);
       line-height: 22px;
       color: #000000;
     }
     &-last {
       width: 100%;
       display: flex;
-      gap: 5px;
+      @include adaptive-value("gap", 5, 0, 1);
       justify-content: space-between;
     }
     &-lastUser {
@@ -143,7 +154,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
       font-family: 'Liberation Sans',sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 11px;
+      @include adaptive-value("font-size", 11, 8, 1);
       line-height: 22px;
       color: #176093;
       overflow: hidden;
@@ -155,7 +166,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
       font-family: 'Liberation Sans',sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 11px;
+      @include adaptive-value("font-size", 11, 8, 1);
       line-height: 22px;
       color: #969696;
     }

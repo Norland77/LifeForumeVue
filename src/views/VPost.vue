@@ -121,34 +121,43 @@ async function createComment () {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/main.scss";
 .post {
   border: 1px solid #A5CAE4;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  margin: 30px 120px;
-  padding: 15px 40px;
+  @include adaptive-value("margin-top", 30, 0, 1);
+  @include adaptive-value("margin-bottom", 30, 0, 1);
+  @include adaptive-value("margin-left", 120, 0, 1);
+  @include adaptive-value("margin-right", 120, 0, 1);
+  @include adaptive-value("padding-top", 15, 0, 1);
+  @include adaptive-value("padding-bottom", 15, 0, 1);
+  @include adaptive-value("padding-left", 40, 0, 1);
+  @include adaptive-value("padding-right", 40, 0, 1);
   &_textBody {
-    padding: 50px 0;
+    @include adaptive-value("padding-top", 50, 0, 1);
+    @include adaptive-value("padding-bottom", 50, 0, 1);
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
+    @include adaptive-value("font-size", 24, 18, 1);
     line-height: 19px;
     color: #141414;
   }
   &_noComments {
-    padding: 50px 0;
+    @include adaptive-value("padding-top", 50, 0, 1);
+    @include adaptive-value("padding-bottom", 50, 0, 1);
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
+    @include adaptive-value("font-size", 24, 18, 1);
     line-height: 19px;
     color: #141414;
   }
   &_header {
     display: flex;
-    gap: 25px;
+    @include adaptive-value("gap", 25, 0, 1);
     justify-content: space-between;
   }
   &_title{
@@ -156,43 +165,43 @@ async function createComment () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 34px;
+    @include adaptive-value("font-size", 34, 24, 1);
     line-height: 42px;
     color: #176093;
   }
   &_admin {
-    height: 40px;
+    @include adaptive-value("height", 40, 20, 1);
     width: 15%;
     background: #176093;
     border-radius: 5px;
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #141414;
     &-ban {
-      height: 40px;
+      @include adaptive-value("height", 40, 20, 1);
       width: 100%;
       background: #176093;
       border-radius: 5px;
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 600;
-      font-size: 16px;
+      @include adaptive-value("font-size", 16, 12, 1);
       line-height: 19px;
       color: #141414;
     }
   }
   &_tags {
     display: flex;
-    gap: 20px;
-    margin-top: 10px;
+    @include adaptive-value("gap", 20, 0, 1);
+    @include adaptive-value("margin-top", 10, 0, 1);
     p {
       font-family: 'Inter',sans-serif;
       font-style: normal;
       font-weight: 400;
-      font-size: 14px;
+      @include adaptive-value("font-size", 14, 10, 1);
       line-height: 17px;
       color: #141414;
     }
@@ -207,7 +216,7 @@ async function createComment () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #141414;
   }
@@ -215,7 +224,7 @@ async function createComment () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 14px;
+    @include adaptive-value("font-size", 14, 10, 1);
     line-height: 17px;
     color: #969696;
   }
@@ -223,16 +232,17 @@ async function createComment () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 14px;
+    @include adaptive-value("font-size", 14, 10, 1);
     line-height: 17px;
     color: #969696;
     p {
-      margin: 40px 0;
+      @include adaptive-value("margin-top", 40, 0, 1);
+      @include adaptive-value("margin-bottom", 40, 0, 1);
     }
   }
   &_textarea {
     width: 100%;
-    height: 200px;
+    @include adaptive-value("height", 200, 100, 1);
     max-height: 200px;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
@@ -240,41 +250,48 @@ async function createComment () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #141414;
-    padding: 10px;
+    @include adaptive-value("padding-top", 10, 0, 1);
+    @include adaptive-value("padding-bottom", 10, 0, 1);
+    @include adaptive-value("padding-left", 10, 0, 1);
+    @include adaptive-value("padding-right", 10, 0, 1);
   }
   &_button {
-    margin-top: 25px;
+    @include adaptive-value("margin-top", 25, 0, 1);
     background: #A5CAE4;
     border-radius: 5px;
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 14px;
+    @include adaptive-value("font-size", 14, 10, 1);
     line-height: 17px;
     color: #141414;
     border: none;
-    padding: 15px;
+    @include adaptive-value("padding-top", 15, 0, 1);
+    @include adaptive-value("padding-bottom", 15, 0, 1);
+    @include adaptive-value("padding-left", 15, 0, 1);
+    @include adaptive-value("padding-right", 15, 0, 1);
   }
 }
 .item {
   border-bottom: 1px solid #A5CAE4;
   display: flex;
-  gap: 30px;
-  padding: 60px 0;
+  @include adaptive-value("gap", 30, 0, 1);
+  @include adaptive-value("padding-top", 60, 0, 1);
+  @include adaptive-value("padding-bottom", 60, 0, 1);
   &_user {
     width: 8%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    @include adaptive-value("gap", 20, 0, 1);
   }
   &_username {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #176093;
     overflow: hidden;
@@ -285,7 +302,7 @@ async function createComment () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 14px;
+    @include adaptive-value("font-size", 14, 10, 1);
     line-height: 17px;
     color: #969696;
   }

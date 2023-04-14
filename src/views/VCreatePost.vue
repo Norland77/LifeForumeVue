@@ -60,6 +60,7 @@ async function createTheme () {
 </script>
 
 <style scoped lang="scss">
+@import "../assets/main.scss";
 .createTheme {
   display: flex;
   align-items: center;
@@ -74,14 +75,20 @@ async function createTheme () {
     align-items: center;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
-    margin: 60px;
-    padding: 30px;
+    @include adaptive-value("margin-top", 60, 0, 1);
+    @include adaptive-value("margin-bottom", 60, 0, 1);
+    @include adaptive-value("margin-left", 60, 0, 1);
+    @include adaptive-value("margin-right", 60, 0, 1);
+    @include adaptive-value("padding-top", 30, 0, 1);
+    @include adaptive-value("padding-bottom", 30, 0, 1);
+    @include adaptive-value("padding-left", 30, 0, 1);
+    @include adaptive-value("padding-right", 30, 0, 1);
   }
   &_title {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 40px;
+    @include adaptive-value("font-size", 40, 24, 1);
     line-height: 46px;
     color: #032A46;
   }
@@ -89,14 +96,14 @@ async function createTheme () {
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    @include adaptive-value("gap", 15, 0, 1);
     width: 100%;
   }
   &_subtitle {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #032A46;
     text-align: left;
@@ -105,11 +112,11 @@ async function createTheme () {
     border: 2px solid #A5CAE4;
     border-radius: 5px;
     width: 100%;
-    height: 35px;
+    @include adaptive-value("height", 35, 15, 1);
   }
   &_textarea {
     width: 100%;
-    height: 150px;
+    @include adaptive-value("height", 150, 50, 1);
     max-height: 200px;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
@@ -117,24 +124,27 @@ async function createTheme () {
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 16px;
+    @include adaptive-value("font-size", 16, 12, 1);
     line-height: 19px;
     color: #141414;
     padding: 10px;
   }
   &_button {
-    margin-top: 15px;
+    @include adaptive-value("margin-top", 15, 0, 1);
     width: 50%;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
     font-family: 'Inter',sans-serif;
     font-style: normal;
     font-weight: 600;
-    font-size: 24px;
+    @include adaptive-value("font-size", 24, 16, 1);
     line-height: 30px;
     color: #032A46;
     background: none;
-    padding: 20px 40px;
+    @include adaptive-value("padding-top", 20, 0, 1);
+    @include adaptive-value("padding-bottom", 20, 0, 1);
+    @include adaptive-value("padding-left", 40, 0, 1);
+    @include adaptive-value("padding-right", 40, 0, 1);
   }
 }
 </style>
