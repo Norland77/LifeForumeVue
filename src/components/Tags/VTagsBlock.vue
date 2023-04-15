@@ -18,7 +18,7 @@ const store = reactive({
 
 const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
 async function getTags() {
-  const response = await fetch(`${apiUrl.value}/tags/get/all`, {
+  const response = await fetch(`${apiUrl.value}/tags/get/all?limit=99`, {
     method: "GET",
   })
   const result = await response.json();
@@ -71,6 +71,23 @@ function showMore () {
     width: 100%;
     border: 1px solid #A5CAE4;
     border-radius: 5px;
+    @include adaptive-value("padding-top", 8, 0, 1);
+    @include adaptive-value("padding-bottom", 8, 0, 1);
+    @include adaptive-value("padding-left", 35, 0, 1);
+    @include adaptive-value("padding-right", 35, 0, 1);
+  }
+  &_show {
+    margin-top: 10px;
+    border: 1px solid #A5CAE4;
+    border-radius: 5px;
+    width: 100%;
+    font-family: 'Inter',sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    @include adaptive-value("font-size", 18, 12, 1);
+    line-height: 22px;
+    color: #176093;
+    background: none;
     @include adaptive-value("padding-top", 8, 0, 1);
     @include adaptive-value("padding-bottom", 8, 0, 1);
     @include adaptive-value("padding-left", 35, 0, 1);
