@@ -150,7 +150,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
       justify-content: space-between;
     }
     &-lastUser {
-      width: 50%;
+      width: 30%;
       font-family: 'Liberation Sans',sans-serif;
       font-style: normal;
       font-weight: 400;
@@ -162,7 +162,7 @@ const props = withDefaults(defineProps<TypeProps>(), {
       white-space: nowrap;
     }
     &-lastData {
-      width: 50%;
+      width: 70%;
       font-family: 'Liberation Sans',sans-serif;
       font-style: normal;
       font-weight: 400;
