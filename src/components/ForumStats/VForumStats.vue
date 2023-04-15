@@ -12,7 +12,7 @@
     </div>
     <div class="stats_body-block">
       <p class="stats_body-text">Користувачі</p>
-      <p class="stats_body-text">1</p>
+      <p class="stats_body-text">{{store.users}}</p>
     </div>
   </div>
 </div>
@@ -23,9 +23,13 @@ import {computed, onMounted, reactive} from "vue";
 
 const store = reactive({
   themes: 0,
-  comments: 0
+  comments: 0,
+  users : 0
 })
-onMounted(getInfoTheme)
+onMounted( () => {
+  getAllUser();
+  getInfoTheme()
+})
 const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
 async function getInfoTheme() {
   const response = await fetch(`${apiUrl.value}/theme/get/all`, {
@@ -37,6 +41,15 @@ async function getInfoTheme() {
     store.comments += item.commentCount
   }
 }
+
+async function getAllUser() {
+  const response = await fetch(`${apiUrl.value}/user/get/all`, {
+    method: "GET",
+  })
+  const result = await response.json();
+  store.users = result.total
+}
+
 
 </script>
 

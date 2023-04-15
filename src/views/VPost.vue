@@ -2,7 +2,7 @@
 <div class="post">
   <div class="post_header">
     <h3 class="post_title">{{store.data.title}}</h3>
-    <button v-if="$store.state.loginStore.isAdmin === 'Admin'" class="post_admin">Видалити тему</button>
+    <button @click.prevent="deleteTheme(store.data._id)" v-if="store.role === 'Admin'" class="post_admin">Видалити тему</button>
   </div>
   <div class="post_tags">
 <!--    <p  v-for="item of message.tags">{{item}}</p>-->
@@ -16,10 +16,10 @@
   <div class="post_item item" v-for="item of store.data.comments">
     <div class="item_user">
       <p class="item_username"> {{ item.user.login }}</p>
-      <p class="item_role">{{$store.state.loginStore.isAdmin}}</p>
-      <div v-if="$store.state.loginStore.isAdmin === 'Admin'">
-        <button v-if="$store.state.loginStore.isBanned" class="post_admin-ban">Розбанити</button>
-        <button v-else class="post_admin-ban">Забанити</button>
+      <p class="item_role">{{item.user.role}}</p>
+      <div v-if="store.role === 'Admin' && item.user.role !== 'Admin'">
+        <button @click.prevent="unBanUser(item.createdBy)" v-if="item.user.isBanned === true" class="post_admin-ban">Розбанити</button>
+        <button @click.prevent="banUser(item.createdBy)" v-else class="post_admin-ban">Забанити</button>
       </div>
     </div>
     <div class="post_messages">
@@ -51,11 +51,14 @@ import setData from "../helpers/index"
 interface userType {
   email: string,
   login: string,
-  _id: string
+  _id: string,
+  role: string,
+  isBanned: boolean
 }
 interface commentsType {
   body: string,
   createdAt: string,
+  createdBy: string,
   user: userType
 }
 
@@ -68,16 +71,23 @@ interface dataType {
 
 interface IData {
   data: dataType,
-  textareaBody: string
+  textareaBody: string,
+  role: string | undefined
 }
 
 import {computed, onMounted, reactive} from "vue";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import { useUserStore } from "../store/users";
+import {useStore} from "vuex";
 const userStore = useUserStore()
 const isLogged = computed(() => {
   return userStore.token !== undefined;
 })
+const isAdmin = computed(() => {
+  return userStore.role
+})
+
+console.log(isAdmin.value)
 
 const route = useRoute()
 const store = reactive<IData>({
@@ -87,7 +97,8 @@ const store = reactive<IData>({
     body: "",
     comments: []
   },
-  textareaBody: ""
+  textareaBody: "",
+  role: isAdmin.value,
 })
 onMounted(getThemesById)
 const apiUrl = computed<string>(() => import.meta.env.VITE_APP_API_URL)
@@ -115,6 +126,45 @@ async function createComment () {
   });
   await getThemesById();
   store.textareaBody = "";
+}
+
+async function banUser (userId: string) {
+  const requestBody = {
+    reason: "Bad guy",
+  }
+  await fetch(`${apiUrl.value}/user/ban/${userId}`, {
+    method: "POST",
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userStore.token}`
+    },
+  });
+  await getThemesById();
+}
+
+async function unBanUser (userId: string) {
+  await fetch(`${apiUrl.value}/user/unban/${userId}`, {
+    method: "PATCH",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userStore.token}`
+    },
+  });
+  await getThemesById();
+}
+
+const router = useRouter()
+
+async function deleteTheme (themeId: string) {
+  await fetch(`${apiUrl.value}/theme/delete/${themeId}`, {
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${userStore.token}`
+    },
+  });
+  await router.push({name: "home"})
 }
 
 

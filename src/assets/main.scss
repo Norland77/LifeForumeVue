@@ -43,10 +43,13 @@ ul li{list-style: none;}
 img{vertical-align: top;}
 h1,h2,h3,h4,h5,h6{font-size: inherit;font-family: inherit;font-weight: inherit;font-style: inherit;}
 
+html {
+  scrollbar-width: thin;
+  scrollbar-color: black green;
+}
 
 #app {
   height: 100%;
   margin: 0 auto;
   font-weight: normal;
-
 }

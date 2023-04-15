@@ -68,6 +68,7 @@ export default {
                     const token = await response.json();
                     userStore.setToken(token.token);
                     userStore.setUsername(token.user.login);
+                    userStore.setRole(token.user.role)
                     state.isActive = state.isActive = false;
                 }catch (e){
                     alert('Something went wrong' + e);
